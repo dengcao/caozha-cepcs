@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改我的资料和密码 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form caozha-view-form caozha-edit-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员ID</label>
+        <div class="layui-input-block">
+            {$admin.admin_id}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员账号</label>
+        <div class="layui-input-block">
+            {$admin.admin_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属权限组</label>
+        <div class="layui-input-block">
+            {$admin.role_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用</label>
+        <div class="layui-input-block">
+            {$admin.is_enabled|raw}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">登陆密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="admin_password" lay-reqtext="" placeholder="留空则不修改"
+                   value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">真实姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="real_name" lay-verify="" lay-reqtext="" placeholder="请输入真实姓名" value="{$admin.real_name}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input type="number" name="tel" lay-verify="" lay-reqtext="" placeholder="请输入手机" value="{$admin.tel}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="email" name="email" placeholder="请输入邮箱" value="{$admin.email}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号</label>
+        <div class="layui-input-block">
+            <input type="text" name="wechat" placeholder="请输入微信号" value="{$admin.wechat}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">QQ号</label>
+        <div class="layui-input-block">
+            <input type="text" name="qq" placeholder="请输入QQ号" value="{$admin.qq}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="saveBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+        </div>
+    </div>
+
+</form>
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/mine/modifySave\')}',
+                data: data.field,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1});
+                        // setTimeout(function(){
+                        //     // 关闭弹出层
+                        //     //layer.close(index);
+                        //     var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        //     parent.layer.close(iframeIndex);
+                        // },800);
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+
+            return false;
+        });
+
+    });
+
+</script>
+</body>
+</html>

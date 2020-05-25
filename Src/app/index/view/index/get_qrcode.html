@@ -1,0 +1,11 @@
+{include file="public/header" /}
+<script src="__CAOZHA-STATIC__/epacs/js/jquery.qrcode.min.js"></script>
+<div class="dh"><a href="{:url('index/index/get_qrcode')}">我的二维码</a> > <font color=#999999><strong>生成结果</strong></font></div>
+	<article class="article">
+		<div class="article-con" style="text-align: center">
+			<div id="code"></div>
+			<div style="color:#666">此为您的专属二维码，请勿泄露！</div>
+		</div>
+	</article>
+<script>$('#code').qrcode("{$qrcode_url|raw}");</script>
+{include file="public/footer" /}

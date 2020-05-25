@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>menu</title>
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
+            height: 34px;
+            line-height: 34px;
+            padding: 0 8px;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <blockquote class="layui-elem-quote">
+            此处显示后台所有功能链接。双击可打开链接。
+        </blockquote>
+        <div>
+            <div class="layui-btn-group">
+                <button class="layui-btn" id="btn-expand">全部展开</button>
+                <button class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
+            </div>
+            <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+        </div>
+    </div>
+</div>
+<!-- 操作列 -->
+<script type="text/html" id="auth-state">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="open">打开</a>
+</script>
+
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="__CAOZHA-LAYUIMINI__/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    //开源插件：treetable-lay: https://gitee.com/whvse/treetable-lay
+    layui.use(['table', 'treetable'], function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        var treetable = layui.treetable;
+
+        // 渲染表格
+        layer.load(2);
+        treetable.render({
+            treeColIndex: 1,
+            treeSpid: 0,
+            treeIdName: 'treeID',
+            treePidName: 'treePID',
+            elem: '#munu-table',
+            url: '{:url(\'admin/index/mapMenus\')}',
+            page: false,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'title', minWidth: 200, title: '菜单名称'},
+                {field: 'href', title: '链接地址'},
+                {field: 'icon', title: 'icon'},
+                {field: 'target', width: 120, align: 'center', title: '打开方式'},
+                {templet: '#auth-state', width: 120, align: 'center', title: '操作'}
+            ]],
+            done: function () {
+                layer.closeAll('loading');
+            }
+        });
+
+        $('#btn-expand').click(function () {
+            treetable.expandAll('#munu-table');
+        });
+
+        $('#btn-fold').click(function () {
+            treetable.foldAll('#munu-table');
+        });
+
+        //监听工具条
+        table.on('tool(munu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'open') {
+                //layer.msg('打开' + data.id);
+                //console.log(data);
+                if(data.href!=""){
+
+                    if(data.target=="_self"){
+                        layui.use(['form','miniTab'], function () {
+                            var form = layui.form,
+                                layer = layui.layer,
+                                miniTab = layui.miniTab;
+
+                            // 打开新的窗口
+                            miniTab.openNewTabByIframe({
+                                href:data.href,
+                                title:data.title,
+                            });
+
+                        });
+                    }else{
+                        window.open(data.href,'new');
+                    }
+
+                }else{
+                    layer.msg(data.title+' 链接为空，无法打开。');
+                }
+            }
+        });
+
+        //监听行双击事件
+        table.on('rowDouble(munu-table)', function(obj){
+            // obj 同上
+            var data = obj.data;
+            var layEvent = obj.event;
+            if(data.href!=""){
+
+                if(data.target=="_self"){
+                    layui.use(['form','miniTab'], function () {
+                        var form = layui.form,
+                            layer = layui.layer,
+                            miniTab = layui.miniTab;
+
+                        // 打开新的窗口
+                        miniTab.openNewTabByIframe({
+                            href:data.href,
+                            title:data.title,
+                        });
+
+                    });
+                }else{
+                    window.open(data.href,'new');
+                }
+
+            }else{
+                layer.msg(data.title+' 链接为空，无法打开。');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

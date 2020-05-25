@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>注册/登记-{$web_config.site_name}</title>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/epacs/css/style.css">
+</head>
+<body class="login-bg">
+<div class="login-contain">
+	<form action="{:url('index/index/action_reg')}" method="post">
+    <div class="login-header">
+        <p>注册/登记</p>
+    </div>
+    <div class="form-group">
+        <div class="form-item2">
+            <input type="radio" name="type" value="2" checked="checked">内部员工 <input type="radio" name="type" value="3">外来访客
+        </div>
+        <div class="form-item">
+            <input name="name" type="text" placeholder="姓名">
+        </div>
+        <div class="form-item">
+            <input name="idcard" type="text" placeholder="身份证号码">
+        </div>
+        <div class="form-item">
+            <input name="company" type="text" placeholder="公司">
+        </div>
+        <div class="form-item">
+            <input name="address" type="text" placeholder="居住地址">
+        </div>
+        <div class="form-item">
+            <input name="tel" type="text" placeholder="联系电话">
+        </div>
+        <div class="form-item">
+            <input name="password" type="password" placeholder="登陆密码">
+        </div>
+    </div>
+    <div class="button-group">
+        <button class="login-btn" id="doLogin" type="submit">马上提交</button>
+		<button class="login-btn" id="doReg" type="button" onClick="location.href='{:url(\'index/index/login\')}';">返回登陆</button>
+    </div>
+    </form>
+</div>
+
+<script src="__CAOZHA-STATIC__/epacs/js/jquery.js"></script>
+<script>
+    $(function(){
+        $(window).resize();
+    });
+    //js设置居中
+    $(window).resize(function(){
+        $(".login-contain").css({
+            position: "absolute",
+            left: ($(window).width() - $(".login-contain").outerWidth())/2,
+            top: ($(window).height() - $(".login-contain").outerHeight())/2
+        });
+    });
+</script>
+
+</body>
+</html>

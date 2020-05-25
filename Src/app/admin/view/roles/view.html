@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form layuimini-form caozha-view-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限组ID：</label>
+        <div class="layui-input-block">
+            {$roles.role_id}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限组名称：</label>
+        <div class="layui-input-block">
+            {$roles.role_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">拥有权限：</label>
+        <div class="layui-input-block">
+
+            <table class="layui-hide" id="show_roles_id" lay-filter="show_roles_filter"></table>
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用：</label>
+        <div class="layui-input-block">
+            {$roles.is_enabled|raw}
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息：</label>
+        <div class="layui-input-block">
+            {$roles.role_remarks}
+        </div>
+    </div>
+
+</form>
+
+<script>
+    layui.use(['table'], function () {
+
+            var table = layui.table;
+            table.render({
+                elem: '#show_roles_id'
+                ,url:'{:url(\'admin/roles/getRolesConfigOne\')}?role_id={$roles.role_id}'
+                ,parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": "0", //解析接口状态 res.status
+                        "msg": "", //解析提示文本 res.message
+                        "count": "", //解析数据长度
+                        "data": res //解析数据列表
+                    };
+                }
+                ,title: '权限表'
+                //,totalRow: true
+                ,even: false  //隔行背景
+                ,size: ""//sm （小尺寸）       lg （大尺寸）
+                ,cols: [[
+                    {field: 'is_own', width: 100, title: '是否拥有', align: "center"}
+                    ,{field:'name', title:'权限名称',width:150, minWidth:150}
+                    ,{field:'role', title:'标识', width:150}
+                    ,{field:'remarks', title:'描述'}
+                ]]
+                ,page: false
+            });
+
+    });
+</script>
+</body>
+</html>

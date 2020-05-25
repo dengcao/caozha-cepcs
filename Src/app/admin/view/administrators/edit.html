@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">管理员账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="admin_name" lay-verify="admin_name" lay-reqtext="" placeholder="请输入账号名" value="{$admin.admin_name}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">登陆密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="admin_password" lay-reqtext="" placeholder="留空则不修改"
+                   value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">选择权限组</label>
+        <div class="layui-input-block">
+            <select name="role_id" lay-verify="required" lay-reqtext="请选择权限组">
+                <option value=""></option>
+                {foreach $roles as $key=>$vo }
+                <option value="{$vo.role_id}"{if $vo.role_id==$admin.role_id} selected{/if}>{$vo.role_name}</option>
+                {/foreach}
+            </select>
+            <tip>提示：修改权限后，此管理员账号下次重新登录后才起效。</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用</label>
+        <div class="layui-input-block">
+            <input type="checkbox" {if $admin.is_enabled==1}checked=""{/if} value="1" name="is_enabled" lay-skin="switch" lay-filter="switchTest"
+                   lay-text="启用|停用">
+            <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">真实姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="real_name" lay-verify="" lay-reqtext="" placeholder="请输入真实姓名" value="{$admin.real_name}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input type="number" name="tel" lay-verify="" lay-reqtext="" placeholder="请输入手机" value="{$admin.tel}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="email" name="email" placeholder="请输入邮箱" value="{$admin.email}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号</label>
+        <div class="layui-input-block">
+            <input type="text" name="wechat" placeholder="请输入微信号" value="{$admin.wechat}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">QQ号</label>
+        <div class="layui-input-block">
+            <input type="text" name="qq" placeholder="请输入QQ号" value="{$admin.qq}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea name="admin_remarks" class="layui-textarea" placeholder="请输入备注信息">{$admin.admin_remarks}</textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="saveBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+        </div>
+    </div>
+    <input type="hidden" name="admin_id" value="{$admin.admin_id}">
+
+</form>
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/administrators/editSave\')}',
+                data: data.field,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1});
+                        setTimeout(function(){
+                            // 关闭弹出层
+                            //layer.close(index);
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.location.reload();
+                        },800);
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+
+            return false;
+        });
+
+        //表单验证
+        form.verify({
+            admin_name: function (value, item) { //value：表单的值、item：表单的DOM对象
+                if (!value) {
+                    return '账号不能为空';
+                }
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return '账号不能有特殊字符';
+                }
+                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                    return '账号首尾不能出现下划线\'_\'';
+                }
+                if (/^\d+\d+\d$/.test(value)) {
+                    return '账号不能全为数字';
+                }
+                if (!(/^[\S]{2,30}$/.test(value))) {
+                    return '账号必须2到30位，且不能出现空格';
+                }
+            }
+
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            , admin_password: [
+                /^[\S]{6,30}$/
+                , '密码必须6到30位，且不能出现空格'
+            ]
+        });
+
+    });
+
+</script>
+</body>
+</html>

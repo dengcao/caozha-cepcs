@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>登录-{$web_config.site_name}</title>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/epacs/css/style.css">
+</head>
+<body class="login-bg">
+<div class="login-contain">
+	<form action="{:url('index/index/login_check')}" method="post">
+    <div class="login-header">
+        <p>登录{$web_config.site_name}</p>
+    </div>
+    <div class="form-group">
+        <div class="form-item">
+            <label for="username">
+                <img src="__CAOZHA-STATIC__/epacs/images/user.png">
+            </label>
+            <input name="idcard" type="text" placeholder="请输入身份证号码">
+        </div>
+        <div class="form-item">
+            <label for="password">
+                <img src="__CAOZHA-STATIC__/epacs/images/password.png" alt="">
+            </label>
+            <input name="password" type="password" placeholder="请输入密码">
+        </div>
+    </div>
+    <div class="button-group">
+        <button class="login-btn" id="doLogin" type="submit">登录</button>
+		<button class="login-btn" id="doReg" type="button" onClick="location.href='{:url(\'index/index/reg\')}';">注册</button>
+    </div>
+		<input type="hidden" name="action" value="login">
+    </form>
+</div>
+
+<script src="__CAOZHA-STATIC__/epacs/js/jquery.js"></script>
+<script>
+    $(function(){
+        $(window).resize();
+    });
+    //js设置居中
+    $(window).resize(function(){
+        $(".login-contain").css({
+            position: "absolute",
+            left: ($(window).width() - $(".login-contain").outerWidth())/2,
+            top: ($(window).height() - $(".login-contain").outerHeight())/2
+        });
+    });
+</script>
+
+</body>
+</html>

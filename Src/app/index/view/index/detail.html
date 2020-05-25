@@ -1,0 +1,10 @@
+{include file="public/header" /}
+<div class="dh"><a href="{:url('index/index')}#news">疫情公告</a> > <font color=#999999><strong>正文</strong></font></div>
+	<article class="article">
+		<h1 class="hd">{$news.title}</h1>
+		<div class="meta">时间：{$news.add_time} &nbsp; 浏览：{$news.hits}</div>
+		<div class="article-con">
+			{$news.content|raw}
+		</div>
+	</article>
+{include file="public/footer" /}

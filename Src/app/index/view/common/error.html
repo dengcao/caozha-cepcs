@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>错误 - {$web_config.site_name}</title>
+    <meta name="keywords" content="{$web_config.site_name}">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <script src="__CAOZHA-STATIC__/admin/caozha/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/admin/caozha/css/style.css" media="all">
+</head>
+<body class="layui-layout-body">
+<script src="__CAOZHA-STATIC__/admin/layuimini/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="__CAOZHA-STATIC__/admin/layuimini/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script>
+    layui.use('layer', function(){
+        var layer = layui.layer;
+
+        //墨绿深蓝风
+        caozha_error=layer.alert('{$alert|raw}', {
+            title:'错误提示',
+            btn: ['确定'],
+            skin: 'layui-layer-molv' //样式类名
+            ,closeBtn: 0,
+            btnAlign: 'c',
+            icon: 5,
+        }, function(){
+            {if $url neq ""}location.href="{$url|raw}";{else}history.back();{/if}
+        });
+
+    });
+</script>
+</body>
+</html>

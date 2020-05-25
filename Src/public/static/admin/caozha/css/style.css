@@ -1,0 +1,30 @@
+/**
+*author: caozha.com
+*/
+.olivedrab{color: olivedrab;}
+.hese{color:#FF5722;}
+
+.cz-float-left{float: left;}
+.cz-toolbar-search{width:160px;position:relative;margin-left: 5px;}
+.cz-toolbar-search .cz-toolbar-search-input{height:30px;width:157px;padding:0 28px 0 5px;}
+.cz-toolbar-search .cz-toolbar-search-btn{position: absolute;left: 128px;cursor: pointer;background:none;border:0px;padding:0px 5px;height: 32px;}
+
+/*修改layui 确认框 第二个按钮颜色*/
+body .layui-layer-molv .layui-layer-btn .layui-layer-btn0 {height: 36px;line-height: 36px;}
+body .layui-layer-molv .layui-layer-btn .layui-layer-btn1 {background: #FFFFFF;height: 36px;line-height: 36px;}
+body .layui-layer-molv .layui-layer-btn a {border-color: rgb(201, 201, 201);}
+
+/*查看layui表单为纯展示*/
+body .caozha-view-form .layui-form-item{margin-bottom: 0px;}
+body .caozha-view-form .layui-form-item .layui-form-label{color:#312520;font-weight: bolder;}
+body .caozha-view-form .layui-form-item .layui-input-block{line-height: 36px;color:#5d513c;margin-right: 1px;}
+body .caozha-view-form > .layui-form-item > .layui-form-label{width: 110px !important;}
+body .caozha-view-form > .layui-form-item > .layui-input-block {margin-left: 140px !important;}
+
+/*修改layui表单展示*/
+body .caozha-edit-form .layui-form-item .layui-input-block{height:50px;}
+body .caozha-edit-form .layui-form-text{height:120px;}
+
+/*系统设置页面*/
+body .web-config-form > .layui-form-item > .layui-form-label {width: 150px !important;}
+body .web-config-form > .layui-form-item > .layui-input-block {margin-left: 190px !important;}

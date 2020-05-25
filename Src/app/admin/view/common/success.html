@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>成功 - 网站后台管理系统 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="keywords" content="__CAOZHA-SYS-NAME__,网站后台管理系统">
+    <meta name="description" content="__CAOZHA-SYS-NAME__是一个采用thinkphp开发的网站后台管理系统，最简洁、易用的后台管理系统。Git仓库：https://gitee.com/caozha/caozha-admin">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="__CAOZHA-STATIC__/logo/favicon.ico">
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body class="layui-layout-body">
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="__CAOZHA-LAYUIMINI__/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script>
+    layui.use('layer', function(){
+        var layer = layui.layer;
+
+        //墨绿深蓝风
+        caozha_success=layer.alert('{$alert|raw}', {
+            title:'成功提示',
+            btn: ['确定'],
+            skin: 'layui-layer-molv' //样式类名
+            ,closeBtn: 0,
+            btnAlign: 'c',
+            icon: 6,
+        }, function(){
+            {if $url neq ""}location.href="{$url|raw}";{else}layer.close(caozha_success);var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);{/if}
+        });
+
+    });
+</script>
+</body>
+</html>

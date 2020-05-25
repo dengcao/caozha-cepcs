@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form caozha-view-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">日志ID：</label>
+        <div class="layui-input-block">
+            {$syslog.log_id}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作人：</label>
+        <div class="layui-input-block">
+            {$syslog.log_user}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作IP：</label>
+        <div class="layui-input-block">
+            {$syslog.log_ip}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作时间：</label>
+        <div class="layui-input-block">
+            {$syslog.log_datetime}
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">操作内容：</label>
+        <div class="layui-input-block">
+            {$syslog.log_content}
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

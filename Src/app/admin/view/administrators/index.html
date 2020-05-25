@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理员 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container cz-float-left">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn"
+                        lay-event="delete"> 删除
+                </button>
+            </div>
+            <div class="cz-toolbar-search cz-float-left">
+                <form class="layui-form layui-form-pane" action="">
+                     <input name="keyword" class="cz-toolbar-search-input" placeholder="请输入关键词">
+                    <button type="submit" class="layui-icon layui-icon-search cz-toolbar-search-btn" lay-submit
+                            lay-filter="data-search-btn"></button>
+                             
+                </form>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-xs layui-btn-primary data-count-view" lay-event="view">详情</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">修改</a>
+        </script>
+
+
+    </div>
+</div>
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '{:url(\'admin/administrators/get\')}',
+            parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'print', {
+                title: '提示：双击可查看管理员详情',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            even: false,//隔行背景
+            size: "",//sm （小尺寸）       lg （大尺寸）
+            cols: [[
+                {type: "checkbox", width: 40, align: "center"},
+                {field: 'admin_id', width: 75, title: 'ID', sort: true},
+                {field: 'admin_name', title: '管理员账号'},
+                {field: 'real_name', title: '真实姓名'},
+                {field: 'role_name', width: 135, title: '权限组'},
+                {field: 'last_login_ip', width: 150, title: '最近登陆IP'},
+                {field: 'last_login_time', width: 170, title: '最近登陆时间', align: "center"},
+                {field: 'login_times', width: 90, title: '登录次数', align: "center"},
+                {field: 'is_enabled', width: 70, title: '启用', align: "center"},
+                {title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: "right"}
+            ]],
+            limits: [5, 10, 15, 20, 25, 50, 100, 200, 500, 1000],
+            limit: {$admin_limit},
+            page: true,
+            skin: 'line'
+        });
+
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                var admin_id_arr = $.map(data, function (d) {
+                    return d.admin_id;
+                });
+                //layer.alert(JSON.stringify(log_id_arr));
+                var admin_id_str = admin_id_arr.join(",");//转为字符串
+
+                if (admin_id_str == "") {
+                    // var caozha_error=layer.alert('请先选择的数据。', {
+                    //      title:'错误提示',
+                    //      btn: ['确定'],
+                    //      skin: 'layui-layer-molv' //样式类名
+                    //      ,closeBtn: 0,
+                    //      btnAlign: 'c',
+                    //      icon: 5,
+                    //  }, function(){
+                    //     layer.close(caozha_error);
+                    //      });
+                    layer.msg('请先选择要删除的数据。', {icon: 2});
+                    return false;
+                }
+
+                caozha_alert = layer.confirm('确定要删除ID为[ ' + admin_id_str + ' ]的管理员账号吗？<br>删除后无法撤销。', {
+                    btn: ['确认删除', '取消删除'],
+                    btnAlign: 'c',
+                    title: "操作提示"
+                }, function () {
+
+                    $.ajax({
+                        type: "post",
+                        url: '{:url(\'admin/administrators/delete\')}',
+                        data: {admin_id: admin_id_str},
+                        dataType: "json",
+                        async: false,
+                        success: function (del_data) {
+                            if (del_data.code == 1) {
+                                layer.msg('删除成功，共删除' + del_data.del_num + '个管理员账号！', {icon: 1});
+                                //执行删除后重载
+                                table.reload('currentTableId', {
+                                    page: {
+                                        curr: 1
+                                    }
+                                }, 'data');
+                            } else {
+                                layer.msg('删除失败', {icon: 2});
+                            }
+                        }
+                    });
+                    layer.close(caozha_alert);//关闭
+
+                });
+
+            }else if (obj.event === 'add') {  // 监听添加操作
+
+                var index = layer.open({
+                    skin: 'layui-layer-molv',
+                    title: '添加管理员',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    //shadeClose: true,
+                    btn: ['立即提交', '重置'],
+                    btnAlign: 'c',
+                    resize:true,//允许拉伸
+                    area: ['580px', '85%'],
+                    content: '{:url(\'admin/administrators/add\')}',
+                    yes: function(index, layero){
+                        //按钮【按钮一】的回调
+
+                        var body = layer.getChildFrame('body', index);
+                        //console.log(body.html()) //得到iframe页的body内容
+                        //body.find('input').val('Hi，我是从父页来的')
+                        body.find(".caozha-submit").click();
+
+                        //var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+
+
+                    }
+                    ,btn2: function(index, layero){
+                        //按钮【按钮二】的回调
+                        var body = layer.getChildFrame('body', index);
+                        body.find(".caozha-reset").click();
+
+                        return false;// 开启该代码可禁止点击该按钮关闭
+                    }
+                    ,cancel: function(){
+                        //右上角关闭回调
+
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                });
+
+            }
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+
+            var result = data.field;
+
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    keyword: result.keyword
+                }
+            }, 'data');
+            $(".cz-toolbar-search-input").val(result.keyword);//重新赋值搜索框
+
+            return false;
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+        //监听行双击事件
+        table.on('rowDouble(currentTableFilter)', function(obj){
+            //console.log(obj.tr) //得到当前行元素对象
+            //console.log(obj.data) //得到当前行数据
+            //obj.del(); //删除当前行
+            //obj.update(fields) //修改当前行数据
+
+            var admin_data = obj.data;
+
+            var index = layer.open({
+                title: '查看管理员资料',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['580px', '85%'],
+                content: '{:url(\'admin/administrators/view\')}?admin_id='+admin_data.admin_id,
+            });
+
+            return false;
+
+
+        });
+
+        //查看 修改
+        table.on('tool(currentTableFilter)', function (obj) {
+            var admin_data = obj.data;
+            if (obj.event === 'edit') {
+
+                var index = layer.open({
+                    skin: 'layui-layer-molv',
+                    title: '修改管理员资料',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    //shadeClose: true,
+                    btn: ['立即提交', '重置'],
+                    btnAlign: 'c',
+                    resize:true,//允许拉伸
+                    area: ['580px', '85%'],
+                    content: '{:url(\'admin/administrators/edit\')}?admin_id='+admin_data.admin_id,
+                    yes: function(index, layero){
+                        //按钮【按钮一】的回调
+
+                        var body = layer.getChildFrame('body', index);
+                        //console.log(body.html()) //得到iframe页的body内容
+                        //body.find('input').val('Hi，我是从父页来的')
+                        body.find(".caozha-submit").click();
+
+                        //var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+
+
+                    }
+                    ,btn2: function(index, layero){
+                        //按钮【按钮二】的回调
+                        var body = layer.getChildFrame('body', index);
+                        body.find(".caozha-reset").click();
+
+                        return false;// 开启该代码可禁止点击该按钮关闭
+                    }
+                    ,cancel: function(){
+                        //右上角关闭回调
+
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                });
+
+                return false;
+            } else if (obj.event === 'view') {
+
+                var index = layer.open({
+                    title: '查看管理员资料',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['580px', '85%'],
+                    content: '{:url(\'admin/administrators/view\')}?admin_id='+admin_data.admin_id,
+                });
+                return false;
+
+            }
+        });
+
+
+    });
+
+</script>
+
+</body>
+</html>

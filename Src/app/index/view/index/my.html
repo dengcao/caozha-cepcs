@@ -1,0 +1,17 @@
+{include file="public/header" /}
+<div class="dh"><a href="{:url('index/index/my')}">我的资料</a> > <font color=#999999><strong>详情</strong></font></div>
+	<article class="article">
+		<div class="article-con">
+			<p><b>账户ID：</b>{$user.user_id}</p>
+			<p><b>姓名：</b>{$user.name}</p>
+			<p><b>公司：</b>{$user.company}</p>
+			<p><b>住址：</b>{$user.address}</p>
+			<p><b>电话：</b>{$user.tel}</p>
+			<p><b>身份证号：</b>{$user.idcard}</p>
+			<p><b>账户类型：</b>{$user.type|raw}</p>
+			<p><b>账户状态：</b>{$user.state|raw}</p>
+			<p><b>注册时间：</b>{$user.reg_time}</p>
+			<p><b>备注：</b>{$user.remarks|raw}</p>
+		</div>
+	</article>
+{include file="public/footer" /}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统日志 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container cz-float-left">
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn"
+                        lay-event="delete"> 删除
+                </button>
+                <button class="layui-btn layui-btn-sm layui-btn data-delete-btn"
+                        lay-event="delete_all"> 删除一周前的日志
+                </button>
+            </div>
+            <div class="cz-toolbar-search cz-float-left">
+                <form class="layui-form layui-form-pane" action="">
+                     <input name="keyword" class="cz-toolbar-search-input" placeholder="请输入关键词">
+                    <button type="submit" class="layui-icon layui-icon-search cz-toolbar-search-btn" lay-submit
+                            lay-filter="data-search-btn"></button>
+                             
+                </form>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+
+    </div>
+</div>
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '{:url(\'admin/syslog/get\')}',
+            parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": "0", //解析接口状态 res.status
+                    "msg": "", //解析提示文本 res.message
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'print'],
+            even: false,//隔行背景
+            size: "",//sm （小尺寸）       lg （大尺寸）
+            cols: [[
+                {type: "checkbox", width: 50},
+                {field: 'log_id', width: 120, title: 'ID', sort: true},
+                {field: 'log_content', minWidth: 150, title: '日志内容'},
+                {field: 'log_user', width: 300, title: '操作人'},
+                {field: 'log_ip', width: 150, title: 'IP'},
+                {field: 'log_datetime', width: 180, title: '记录时间', sort: true}
+            ]],
+            limits: [5, 10, 15, 20, 25, 50, 100, 200, 500, 1000],
+            limit: {$syslog_limit},
+            page: true,
+            skin: 'line'
+        });
+
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+
+            if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                var log_id_arr = $.map(data, function (d) {
+                    return d.log_id;
+                });
+                //layer.alert(JSON.stringify(log_id_arr));
+                var log_id_str = log_id_arr.join(",");//转为字符串
+
+                if(log_id_str==""){
+                   // var caozha_error=layer.alert('请先选择的数据。', {
+                   //      title:'错误提示',
+                   //      btn: ['确定'],
+                   //      skin: 'layui-layer-molv' //样式类名
+                   //      ,closeBtn: 0,
+                   //      btnAlign: 'c',
+                   //      icon: 5,
+                   //  }, function(){
+                   //     layer.close(caozha_error);
+                   //      });
+                    layer.msg('请先选择要删除的数据。', {icon: 2});
+                    return false;
+                }
+
+                caozha_alert=layer.confirm('确定要删除ID为[ '+log_id_str+' ]的数据吗？<br>删除后无法撤销。',{btn: ['确认删除', '取消删除'],btnAlign: 'c',title:"操作提示"}, function(){
+
+                    $.ajax({
+                        type: "post",
+                        url: '{:url(\'admin/syslog/delete\')}',
+                        data: {log_id:log_id_str},
+                        dataType: "json",
+                        async:false,
+                        success:function(del_data) {
+                            if(del_data.code == 1){
+                                layer.msg(del_data.msg, {icon: 1});
+                                //执行删除后重载
+                                table.reload('currentTableId', {
+                                    page: {
+                                        curr: 1
+                                    }
+                                }, 'data');
+                            }else{
+                                layer.msg(del_data.msg, {icon: 2});
+                            }
+                        }
+                    });
+                    layer.close(caozha_alert);//关闭
+
+                    });
+
+
+            }else if(obj.event === 'delete_all'){
+
+                //删除一周前的日志记录
+                caozha_alert=layer.confirm('确定要删除一周前的所有日志记录吗？<br>删除后无法撤销。',{btn: ['确认删除', '取消删除'],btnAlign: 'c',title:"操作提示"}, function(){
+
+                    $.ajax({
+                        type: "post",
+                        url: '{:url(\'admin/syslog/deleteAll\')}',
+                        data: "",
+                        dataType: "json",
+                        async:false,
+                        success:function(del_data) {
+                            if(del_data.code == 1){
+                                layer.msg(del_data.msg, {icon: 1});
+                                //执行删除后重载
+                                table.reload('currentTableId', {
+                                    page: {
+                                        curr: 1
+                                    }
+                                }, 'data');
+                            }else{
+                                layer.msg(del_data.msg, {icon: 2});
+                            }
+                        }
+                    });
+                    layer.close(caozha_alert);//关闭
+
+                });
+
+            }
+
+
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+
+            var result = data.field;
+
+            //执行搜索重载
+            table.reload('currentTableId', {
+                //url: '{:url(\'admin/syslog/get\')}',
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    keyword: result.keyword
+                }
+            }, 'data');
+            $(".cz-toolbar-search-input").val(result.keyword);//重新赋值搜索框
+
+            return false;
+        });
+
+        //监听行双击事件
+        table.on('rowDouble(currentTableFilter)', function(obj){
+            //console.log(obj.tr) //得到当前行元素对象
+            //console.log(obj.data) //得到当前行数据
+            //obj.del(); //删除当前行
+            //obj.update(fields) //修改当前行数据
+
+            var data = obj.data;
+
+            var index = layer.open({
+                title: '查看系统日志',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['50%', '60%'],
+                content: '{:url(\'admin/syslog/view\')}?log_id='+data.log_id,
+            });
+
+            return false;
+
+
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

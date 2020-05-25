@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UEditor富文本编辑器</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+
+    <script type="text/javascript" charset="utf-8" src="__CAOZHA-STATIC__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__CAOZHA-STATIC__/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加载语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="__CAOZHA-STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <blockquote class="layui-elem-quote">
+            富文本编辑器使用开源项目：caozha-UEditor（基于百度UEditor 1.4.3.3-utf8-php版修改）<br>
+            具体使用请参考：<a href="https://gitee.com/caozha/ueditor" target="_blank" style="color: red">https://gitee.com/caozha/ueditor</a><br><br>
+            设置上传图片是否加水印：<br>
+            1、打开__CAOZHA-STATIC__/ueditor/php/config.json，将"imageWatermark"修改为true，即可开启默认添加图片水印。<br>
+            2、水印图片存放位置：__CAOZHA-STATIC__/ueditor/php/water/watermark.png。<br><br>
+            单独调用上传接口演示：<a href="__CAOZHA-STATIC__/ueditor/demo_upload.html" target="_blank" style="color: red">点击打开</a><br><br>
+            在整合进本系统时，修改了以下内容：<br>
+            1、上传路径改为/uploads/<br>
+            2、新增了权限控制，必须后台管理员才能使用上传功能。
+        </blockquote>
+
+        <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+        <!-- 实例化编辑器 -->
+        <script type="text/javascript">
+            var ue = UE.getEditor('editor');
+        </script>
+
+    </div>
+</div>
+
+</body>
+</html>

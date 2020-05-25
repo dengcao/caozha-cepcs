@@ -1,0 +1,27 @@
+{include file="public/header" /}
+<div class="bg about list-pic-index">
+<ul class="fix">
+    <li><a href="{:url('index/index/my')}">我的资料</a></li>
+    <li><a href="{:url('index/index/get_qrcode')}">我的二维码</a></li>
+    <li><a href="{:url('index/index/report')}">疫情上报</a></li>
+    <li><a href="{:url('index/index/logout')}">退出登录</a></li>
+</ul>
+</div>
+<a name="news"></a>
+<div class="tab-news" id="tab-news">
+	<div class="tab-news-hd tab-hd-index">
+        <ul class="fix">
+            <li>疫情公告</li>
+        </ul>
+    </div>
+    <div class="tab-news-con">
+        <div class="con list-index active">
+            <ul>
+                {foreach $news as $key=>$vo}
+                <li><a href="{:url('index/index/detail')}?news_id={$vo.news_id}">{$vo.title} ({$vo.add_time})</a></li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}

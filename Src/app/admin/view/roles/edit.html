@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+    <script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">权限组名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="role_name" lay-verify="required" lay-reqtext="权限组名称不能为空" placeholder="请输入权限组名称" value="{$roles.role_name}"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">选择权限</label>
+        <div class="layui-input-block">
+
+            <table class="layui-hide" id="show_roles_id" lay-filter="show_roles_filter"></table>
+            <tip>提示：修改权限后，受影响的管理员账号下次重新登录后才起效。</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用</label>
+        <div class="layui-input-block">
+            <input type="checkbox" {if $roles.is_enabled==1}checked=""{/if} value="1" name="is_enabled" lay-skin="switch" lay-filter="switchTest"
+                   lay-text="启用|停用">
+            <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea name="role_remarks" class="layui-textarea" placeholder="请输入备注信息">{$roles.role_remarks}</textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="saveBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+        </div>
+    </div>
+    <input type="hidden" name="role_id" value="{$roles.role_id}">
+
+</form>
+
+<script>
+    layui.use(['form','table'], function () {
+
+            var table = layui.table;
+            table.render({
+                elem: '#show_roles_id'
+                ,url:'{:url(\'admin/roles/getRolesConfigOne\')}?show=edit&role_id={$roles.role_id}'
+                ,parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": "0", //解析接口状态 res.status
+                        "msg": "", //解析提示文本 res.message
+                        "count": "", //解析数据长度
+                        "data": res //解析数据列表
+                    };
+                }
+                ,title: '权限表'
+                //,totalRow: true
+                ,even: false  //隔行背景
+                ,size: ""//sm （小尺寸）       lg （大尺寸）
+                ,cols: [[
+                    {type: "checkbox", width: 40, align: "center"}
+                    ,{field:'name', title:'权限名称',width:150, minWidth:150}
+                    ,{field:'role', title:'标识', width:150}
+                    ,{field:'remarks', title:'描述'}
+                ]]
+                ,page: false
+            });
+
+
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+
+            var checkStatus = table.checkStatus('show_roles_id')
+                , roles_data = checkStatus.data;
+            var key_arr = $.map(roles_data, function (d) {
+                return d.role;
+            });
+            //layer.alert(JSON.stringify(key_arr));
+            var key_str = key_arr.join(",");//转为字符串
+
+            if (key_str == "") {
+                layer.msg('请选择权限。', {icon: 2});
+                return false;
+            }
+            post_data=data.field;
+            post_data["roles"]=key_str;
+            //console.log(post_data);
+
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/roles/editSave\')}',
+                data: post_data,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1});
+                        setTimeout(function(){
+                            // 关闭弹出层
+                            //layer.close(index);
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.location.reload();
+                        },800);
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+
+            return false;
+        });
+
+
+    });
+
+</script>
+</body>
+</html>

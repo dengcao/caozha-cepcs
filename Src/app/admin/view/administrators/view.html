@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<form class="layui-form layuimini-form caozha-view-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员ID：</label>
+        <div class="layui-input-block">
+            {$admin.admin_id}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员账号：</label>
+        <div class="layui-input-block">
+           {$admin.admin_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属权限组：</label>
+        <div class="layui-input-block">
+            {$admin.role_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用：</label>
+        <div class="layui-input-block">
+            {$admin.is_enabled|raw}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">真实姓名：</label>
+        <div class="layui-input-block">
+            {$admin.real_name}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机：</label>
+        <div class="layui-input-block">
+            {$admin.tel}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱：</label>
+        <div class="layui-input-block">
+            {$admin.email}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号：</label>
+        <div class="layui-input-block">
+            {$admin.wechat}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">QQ号：</label>
+        <div class="layui-input-block">
+            {$admin.qq}
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息：</label>
+        <div class="layui-input-block">
+            {$admin.admin_remarks}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">最近登陆IP：</label>
+        <div class="layui-input-block">
+            {$admin.last_login_ip}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">最近登陆时间：</label>
+        <div class="layui-input-block">
+            {$admin.last_login_time}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">登陆次数：</label>
+        <div class="layui-input-block">
+            {$admin.login_times}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">最近退出时间：</label>
+        <div class="layui-input-block">
+            {$admin.last_logout_time}
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

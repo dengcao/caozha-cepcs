@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统设置 - Powered by __CAOZHA-SYS-NAME__ __CAOZHA-SYS-VERSION__</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="__CAOZHA-LAYUIMINI__/css/public.css" media="all">
+    <style>
+        .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+    </style>
+    <script src="__CAOZHA-STATIC__/js/all.js"></script>
+    <link rel="stylesheet" href="__CAOZHA-STATIC__/css/style.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <div class="layui-form layuimini-form web-config-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">网站名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="site_name" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站名称"  value="{$web_config.site_name}" class="layui-input">
+                    <tip>填写自己部署网站的名称。</tip>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">网站域名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="site_url" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站域名"  value="{$web_config.site_url}" class="layui-input">
+                    <tip>结尾不能带/ &nbsp; 如：http://caozha.com</tip>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟管理员页面设置的limits一致，否则出错-->
+                    <select name="admin_limit" id="admin_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限组每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟权限组页面设置的limits一致，否则出错-->
+                    <select name="roles_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">系统日志每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟系统日志页面设置的limits一致，否则出错-->
+                    <select name="syslog_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻公告每页显示</label>
+                <div class="layui-input-block"><!--此处设置的选项必须跟新闻公告页面设置的limits一致，否则出错-->
+                    <select name="news_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">疫情上报每页显示</label>
+                <div class="layui-input-block">
+                    <select name="record_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户管理每页显示</label>
+                <div class="layui-input-block">
+                    <select name="user_limit">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="15">15条</option>
+                        <option value="20">20条</option>
+                        <option value="25">25条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                        <option value="200">200条</option>
+                        <option value="500">500条</option>
+                        <option value="1000">1000条</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">首页标题</label>
+                <div class="layui-input-block">
+                    <textarea name="index_title" class="layui-textarea">{$web_config.index_title}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">首页关键词</label>
+                <div class="layui-input-block">
+                    <textarea name="index_keywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割">{$web_config.index_keywords}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META描述</label>
+                <div class="layui-input-block">
+                    <textarea name="index_description" class="layui-textarea">{$web_config.index_description}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">网站底部信息</label>
+                <div class="layui-input-block">
+                    <textarea name="site_footer" class="layui-textarea">{$web_config.site_footer|raw}</textarea>
+                    <tip>支持HTML代码</tip>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn caozha-submit" lay-submit="" lay-filter="setting">确认保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary caozha-reset">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__CAOZHA-LAYUIMINI__/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            ,layer = layui.layer
+            ,$ = layui.$;
+
+        $('select[name="admin_limit"]').val('{$web_config.admin_limit}');
+        $('select[name="roles_limit"]').val('{$web_config.roles_limit}');
+        $('select[name="syslog_limit"]').val('{$web_config.syslog_limit}');
+        $('select[name="news_limit"]').val('{$web_config.news_limit}');
+        $('select[name="user_limit"]').val('{$web_config.user_limit}');
+        $('select[name="record_limit"]').val('{$web_config.record_limit}');
+        form.render('select'); //刷新select选择框渲染
+
+        //监听提交
+        form.on('submit(setting)', function (data) {
+            $.ajax({
+                type: "post",
+                url: '{:url(\'admin/web_config/save\')}',
+                data: data.field,
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1});
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                complete: function (res) {
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

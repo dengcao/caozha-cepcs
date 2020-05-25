@@ -1,0 +1,21 @@
+{include file="public/header" /}
+<div class="dh"><a href="{:url('index/index/report')}">疫情上报</a> > <font color=#999999><strong>提交资料</strong></font></div>
+	<form action="{:url('index/index/action_report')}" method="post">
+	<article class="article">
+		<div class="article-con">
+			<p><b>我的账户：</b>{$user.user_id}</p>
+			<p><b>我的姓名：</b>{$user.name}</p>
+			<p><b>所属公司：</b>{$user.company}</p>
+			<p><b>身份证号：</b>{$user.idcard}</p>
+			<p><b>上报类型：</b>{$user.type}</p>
+			<p><b>我的体温：</b><input name="temperature" class="temperature" type="text" placeholder="填写不实，后果自负"> 度</p>
+			<p><b>是否咳嗽：</b><select name="is_cough" class="temperature">
+				<option value="1">是</option>
+				<option value="0" selected>否</option>
+			</select></p>
+			<p><b class="remarks-l">我的备注：</b><textarea name="remarks" class="remarks" placeholder="可不填写"></textarea></p>
+			<p style="clear:both"><button type="submit" class="report_sub">提交上报</button></p>
+		</div>
+	</article>
+</form>
+{include file="public/footer" /}
