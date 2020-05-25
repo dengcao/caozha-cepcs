@@ -15,7 +15,7 @@ caozha-CEPCS，是一个基于PHP开发的新冠肺炎疫情防控系统，CEPCS
 
 **后端功能**
 
-后端基于[caozha-admin](https://gitee.com/caozha/caozha-admin)架构开发，功能完善，有：疫情新闻公告、会员管理、疫情上报记录、系统设置、管理员维护、权限组管理、系统日志等等功能。
+后端基于开源免费的[caozha-admin](https://gitee.com/caozha/caozha-admin)架构开发，功能完善，有：疫情新闻公告、会员管理、疫情上报记录、系统设置、管理员维护、权限组管理、系统日志等等功能。
 
 
 更多功能，自己下载体验吧。
@@ -44,7 +44,7 @@ caozha-CEPCS，是一个基于PHP开发的新冠肺炎疫情防控系统，CEPCS
 
 ***后端：***
 
-采用[caozha-admin](https://gitee.com/caozha/caozha-admin)架构，安装和使用方法也跟caozha-admin类似，所以请参考Wiki：
+采用开源免费的[caozha-admin](https://gitee.com/caozha/caozha-admin)架构，安装和使用方法也跟caozha-admin类似，所以请参考Wiki：
 
 国内：https://gitee.com/caozha/caozha-admin/wikis
 
