@@ -138,7 +138,7 @@ class Record
             $del_num=RecordModel::where("record_id","in",$record_id)->delete();
         }
         if($del_num>0){
-            write_syslog(array("log_content"=>"删除用户(ID)：".$record_id));//记录系统日志
+            write_syslog(array("log_content"=>"删除疫情上报记录(ID)：".$record_id));//记录系统日志
             $list=array("code"=>1,"del_num"=>$del_num);
         }else{
             $list=array("code"=>0,"del_num"=>0);
