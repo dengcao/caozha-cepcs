@@ -40,6 +40,35 @@ caozha-CEPCS，是一个基于PHP开发的新冠肺炎疫情防控系统，CEPCS
 7、前端访问地址：http://您的域名/index.php   (测试账户：450881000000000011  密码：123456)
 
 
+
+**伪静态设置**
+
+1、ThinkPHP框架必须在根目录下设置伪静态才能正常访问，否则会显示404错误。
+
+2、如果您使用的是Apache，伪静态设置为（.htaccess）：
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php?s=$1 [QSA,PT,L]
+</IfModule>
+
+3、如果您使用的是Nginx，伪静态设置为：
+
+location / {
+    index index.php;
+    if (!-e $request_filename) {
+       rewrite  ^(.*)$  /index.php?s=/$1  last;
+       break;
+    }
+}
+
+4、在网站根目录下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
+
+
+
 **开发手册**
 
 ***后端：***
