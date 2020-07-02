@@ -215,55 +215,30 @@ function filter_html($str)
  * 获取客户端IP
  * @return string
  */
-function getip()
-{
-
-    if (Request::header("HTTP_CDN_SRC_IP")) { //获取网宿CDN真实客户IP
-
-        return replace_ip(Request::header("HTTP_CDN_SRC_IP"));
-
+function getip() { //获取客户端IP
+    if ( isset($_SERVER[ "HTTP_CDN_SRC_IP" ]) ) { //获取网宿CDN真实客户IP
+        return replace_ip( $_SERVER[ "HTTP_CDN_SRC_IP" ] );
     }
-
-    if (Request::header("HTTP_X_FORWARDED_FOR")) { //获取网宿、阿里云真实客户IP，参考：https://help.aliyun.com/knowledge_detail/40535.html
-
-        return replace_ip(Request::header("HTTP_X_FORWARDED_FOR"));
-
+    if ( isset($_SERVER[ "HTTP_X_FORWARDED_FOR" ]) ) { //获取网宿、阿里云真实客户IP，参考：https://help.aliyun.com/knowledge_detail/40535.html
+        return replace_ip( $_SERVER[ "HTTP_X_FORWARDED_FOR" ] );
     }
-
-    if (Request::header("HTTP_CLIENT_IP")) {
-
-        return Request::header("HTTP_CLIENT_IP");
-
+    if ( isset($_SERVER[ "HTTP_CLIENT_IP" ]) ) {
+        return $_SERVER[ "HTTP_CLIENT_IP" ];
     }
-
-    if (Request::header("HTTP_X_FORWARDED")) {
-
-        return Request::header("HTTP_X_FORWARDED");
-
+    if ( isset($_SERVER[ "HTTP_X_FORWARDED" ]) ) {
+        return $_SERVER[ "HTTP_X_FORWARDED" ];
     }
-
-    if (Request::header("HTTP_FORWARDED_FOR")) {
-
-        return Request::header("HTTP_FORWARDED_FOR");
-
+    if ( isset($_SERVER[ "HTTP_FORWARDED_FOR" ]) ) {
+        return $_SERVER[ "HTTP_FORWARDED_FOR" ];
     }
-
-    if (Request::header("HTTP_FORWARDED")) {
-
-        return Request::header("HTTP_FORWARDED");
-
+    if ( isset($_SERVER[ "HTTP_FORWARDED" ]) ) {
+        return $_SERVER[ "HTTP_FORWARDED" ];
     }
-
-    $httpip = Request::header('REMOTE_ADDR');
-
-    if (!preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $httpip)) {
-
+    $httpip = $_SERVER[ 'REMOTE_ADDR' ];
+    if ( !preg_match( "/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $httpip ) ) {
         $httpip = "127.0.0.1";
-
     }
-
     return $httpip;
-
 }
 
 /**
