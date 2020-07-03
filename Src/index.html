@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>错误提示</title>
+</head>
+<body>
+<div style="padding: 20px 50px">
+<b>网站根目录设置错误提示：</b>
+    <br><br>
+    1、按ThinkPHP6.0的要求，为了安全，您需要把网站根目录指向运行目录/public/。（网站必须开启伪静态，目录下的文件.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态规则。）<br>
+    2、如果您确实需要在根目录里运行程序，可将/public/里的入口文件和资源文件等移到根目录下，并根据出现的实际情况适当地修改代码。<br>
+    3、如果您既不想把网站根目录指向/public/，也不想将/public/里的文件移动到根目录，那么可以这样设置：以Apache为例，将根目录下的bak.htaccess修改为.htaccess即可，使用此方法，URL里会多一个/public/。（Nginx请自行配置伪静态）。
+    <br><br>
+    谢谢您对草札（caozha.com）的支持。
+
+</div>
+</body>
+</html>

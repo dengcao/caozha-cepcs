@@ -29,11 +29,11 @@ caozha-CEPCS，是一个基于PHP开发的新冠肺炎疫情防控系统，CEPCS
 
 2、上传目录/Src/内所有源码到服务器。
 
-3、设置网站的根目录指向入口目录/Src/public/。（TP6.0要求，如果不指向，需在访问路径加上public/）
+3、设置网站的根目录指向运行目录/public/。（此为ThinkPHP6.0的要求）
 
 4、将/Database/目录里的.sql文件导入到MYSQL数据库。
 
-5、修改文件/Src/config/database.php，配置您的数据库信息。
+5、修改文件/config/database.php，配置您的数据库信息。
 
 6、后台访问地址：http://您的域名/index.php/admin/index/login   (账号：caozha   密码：123456)
 
@@ -42,7 +42,7 @@ caozha-CEPCS，是一个基于PHP开发的新冠肺炎疫情防控系统，CEPCS
 
 **伪静态设置**
 
-1、ThinkPHP框架必须在根目录下设置伪静态才能正常访问，否则会显示404错误。
+1、ThinkPHP框架必须在运行目录下设置伪静态才能正常访问，否则会显示404错误。
 
 2、如果您使用的是Apache，伪静态设置为（.htaccess）：
 
@@ -78,7 +78,7 @@ location / {
 }
 
 
-4、在网站根目录下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
+4、在网站运行目录（/public/）下，有两个文件：.htaccess和nginx.htaccess，分别是Apache和Nginx的伪静态文件，您可以直接拿来使用。
 
  
 **开发手册**
