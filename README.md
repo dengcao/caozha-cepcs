@@ -15,7 +15,7 @@ caozha-CEPCS，是一个基于PHP开发的新冠肺炎疫情防控系统，CEPCS
 
 **后端功能**
 
-后端基于开源免费的[caozha-admin](https://gitee.com/caozha/caozha-admin)架构开发，功能完善，有：疫情新闻公告、会员管理、疫情上报记录、系统设置、管理员维护、权限组管理、系统日志等等功能。
+后端基于开源免费的[caozha-admin](https://gitee.com/dengzhenhua/caozha-admin)架构开发，功能完善，有：疫情新闻公告、会员管理、疫情上报记录、系统设置、管理员维护、权限组管理、系统日志等等功能。
 
 
 更多功能，自己下载体验吧。
@@ -85,11 +85,11 @@ location / {
 
 ***后端：***
 
-采用开源免费的[caozha-admin](https://gitee.com/caozha/caozha-admin)架构，安装和使用方法也跟caozha-admin类似，所以请参考Wiki：
+采用开源免费的[caozha-admin](https://gitee.com/dengzhenhua/caozha-admin)架构，安装和使用方法也跟caozha-admin类似，所以请参考Wiki：
 
-国内：https://gitee.com/caozha/caozha-admin/wikis
+国内：https://gitee.com/dengzhenhua/caozha-admin/wikis
 
-国外：https://github.com/cao-zha/caozha-admin/wiki
+国外：https://github.com/dengcao/caozha-admin/wiki
 
 ***前端：***
 
@@ -135,16 +135,15 @@ location / {
 
 支持本程序，请到Gitee和GitHub给我们点Star！
 
-Gitee：https://gitee.com/caozha/caozha-cepcs
+Gitee：https://gitee.com/dengzhenhua/caozha-cepcs
 
-GitHub：https://github.com/cao-zha/caozha-cepcs
+GitHub：https://github.com/dengcao/caozha-cepcs
 
-### 关于开发者
+### 关于
 
-开发：草札 www.caozha.com
+开发：[邓草博客 blog.5300.cn](http://blog.5300.cn)
 
-鸣谢：品络 www.pinluo.com  &ensp;  穷店 www.qiongdian.com
-
+赞助：[品络互联 www.pinluo.com](http://www.pinluo.com)  &ensp;  [AI工具箱 5300.cn](http://5300.cn)  &ensp;  [汉语言文学网 hyywx.com](http://hyywx.com)  &ensp;  [雄马 xiongma.cn](http://xiongma.cn) &ensp;  [优惠券 tm.gs](http://tm.gs)
 
 
 ### 后端界面预览
